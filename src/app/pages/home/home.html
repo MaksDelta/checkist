@@ -1,8 +1,42 @@
 <div class="home-container">
-  <h1>Головна сторінка</h1>
+  <div class="title">
+    <h1>Hi Arthur, welcome! You have 12 tasks.</h1>
+    <div class="search">
+      <input type="text" placeholder="Search" />
+      <div class="user">
+        <p>AR</p>
+      </div>
+    </div>
+  </div>
+
   <div class="button-row">
-    <button (click)="navigateTo('/dashboard')">Dashboard</button>
-    <button (click)="navigateTo('/account/1')">Account 1</button>
-    <button (click)="navigateTo('/account/2')">Account 2</button>
+    <button
+      *ngFor="let section of sections"
+      (click)="setContent(section.key)"
+      [class.active]="currentContent === section.key"
+    >
+      <img [src]="section.icon" alt="{{ section.label }} icon" class="button-icon" />
+      {{ section.label }}
+    </button>
+  </div>
+
+  <div class="content-zone">
+    @if (currentContent === 'dashboard') {
+    <app-dashboard></app-dashboard>
+    } @else if (currentContent === 'accounts') {
+    <app-accounts></app-accounts>
+    } @else if (currentContent === 'brokers') {
+    <div>Brokers content here...</div>
+    } @else if (currentContent === 'submissions') {
+    <div>Submissions content here...</div>
+    } @else if (currentContent === 'organizations') {
+    <div>Organizations content here...</div>
+    } @else if (currentContent === 'goals') {
+    <div>Goals & Rules content here...</div>
+    } @else if (currentContent === 'admin') {
+    <div>Admin content here...</div>
+    } @else {
+    <div>Select a section</div>
+    }
   </div>
 </div>
