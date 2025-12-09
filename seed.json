@@ -1,0 +1,40 @@
+{
+  "accounts": [
+    {
+      "id": 101,
+      "name": "Acme GmbH",
+      "status": "Active",
+      "segment": "Mid-Market",
+      "owner": "Jane Doe"
+    }
+  ],
+  "policies": [
+    {
+      "id": 5001,
+      "accountId": 101,
+      "policyNo": "PL-2025-0001",
+      "lob": "Property",
+      "premium": 12500,
+      "status": "Active",
+      "effective": "2025-09-01",
+      "expiration": "2026-08-31"
+    }
+  ],
+  "workQueue": [
+    {
+      "id": 1,
+      "type": "Submission Review",
+      "priority": "High",
+      "account": "Acme GmbH",
+      "due": "2025-09-10"
+    }
+  ],
+  "news": [
+    {
+      "id": 1,
+      "title": "Reinsurance rates trend up",
+      "source": "MarketWatch",
+      "publishedAt": "2025-08-31T10:00:00Z"
+    }
+  ]
+}
