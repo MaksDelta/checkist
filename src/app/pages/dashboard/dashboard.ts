@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export interface QueueItem {
   id: number;
+  name: string;
   type: string;
   priority: string;
   account: string;
@@ -104,6 +105,21 @@ export class DashboardComponent {
 
   setContent(section: string) {
     this.currentContent = section;
+
+    this.http.get<any>('assets/data/seed.json').subscribe({
+      next: (data) => {
+        let allQueue: QueueItem[] = data.workQueue;
+
+        if (section === 'assigned') {
+          this.queueData = allQueue;
+        } else if (section === 'review') {
+          this.queueData = allQueue.filter((item) => item.account === 'Pending review');
+        } else if (section === 'referrals') {
+          this.queueData = allQueue.filter((item) => item.account === 'New');
+        }
+      },
+      error: (err) => console.error('Cannot load JSON', err),
+    });
   }
 
   toggleMenu(id: number) {

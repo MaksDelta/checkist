@@ -75,45 +75,83 @@
   "workQueue": [
     {
       "id": 1,
+      "name": "Acme GmbH",
       "type": "Submission Review",
       "priority": "High",
-      "account": "Acme GmbH",
+      "account": "New",
       "due": "2025-09-10"
     },
     {
       "id": 2,
+      "name": "Beta Corp",
       "type": "Document Verification",
       "priority": "Medium",
-      "account": "Beta Corp",
+      "account": "New",
       "due": "2025-09-15"
     },
     {
       "id": 3,
+      "name": "Delta Inc",
       "type": "Compliance Check",
       "priority": "High",
-      "account": "Gamma Ltd",
+      "account": "Completed",
       "due": "2025-09-18"
     },
     {
       "id": 4,
+      "name": "Gamma Ltd",
       "type": "Financial Audit",
       "priority": "Low",
-      "account": "Delta Inc",
+      "account": "New",
       "due": "2025-09-20"
     },
     {
       "id": 5,
+      "name": "Acme GmbH",
       "type": "Policy Review",
       "priority": "Medium",
-      "account": "Epsilon LLC",
+      "account": "Pending review",
       "due": "2025-09-22"
     },
     {
       "id": 6,
+      "name": "Delta Inc",
       "type": "Risk Assessment",
       "priority": "High",
-      "account": "Zeta Group",
+      "account": "Completed",
       "due": "2025-09-25"
+    },
+    {
+      "id": 7,
+      "name": "Beta Corp",
+      "type": "Underwriting Review",
+      "priority": "Medium",
+      "account": "Pending review",
+      "due": "2025-09-28"
+    },
+    {
+      "id": 8,
+      "name": "Gamma Ltd",
+      "type": "Quote Preparation",
+      "priority": "Low",
+      "account": "New",
+      "due": "2025-09-30"
+    },
+    {
+      "id": 9,
+      "name": "Acme GmbH",
+      "type": "Document Collection",
+      "priority": "High",
+      "account": "New",
+      "due": "2025-10-02"
+    },
+    {
+      "id": 10,
+      "name": "Delta Inc",
+      "type": "Client Follow-up",
+      "priority": "Medium",
+      "account": "Pending review",
+      "due": "2025-10-05"
     }
   ],
   "news": [

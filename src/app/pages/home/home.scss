@@ -8,7 +8,7 @@
     padding: 10px 0 10px 0;
 
     h1 {
-      margin-left: 150px;
+      margin-left: 75px;
       color: $color-white;
       font-weight: 400;
       font-size: 2rem;
@@ -58,7 +58,7 @@
   .button-row {
     display: flex;
     gap: 10px;
-    margin: 20px 0 20px 150px;
+    margin: 20px 0 20px 75px;
 
     button {
       padding: 12px 20px;
@@ -95,6 +95,6 @@
   }
 
   .content-zone {
-    margin-left: 150px;
+    margin-left: 75px;
   }
 }

@@ -25,7 +25,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of queueData">
-              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
               <td>{{ item.type }}</td>
               <td>{{ item.priority }}</td>
               <td>{{ item.account }}</td>
@@ -59,6 +59,20 @@
       </div>
       <div class="intelligence">
         <h2>Market intelligence</h2>
+        <div class="intelligence-items">
+          <div class="intelligence-item red">
+            <div class="circle"></div>
+            <span>Rate hardening in Cyber market - +15% YoY</span>
+          </div>
+          <div class="intelligence-item yellow">
+            <div class="circle"></div>
+            <span>New capacity entering Marine market</span>
+          </div>
+          <div class="intelligence-item blue">
+            <div class="circle"></div>
+            <span>Environmental regulatory changes in CA</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
