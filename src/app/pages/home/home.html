@@ -15,7 +15,6 @@
       (click)="setContent(section.key)"
       [class.active]="currentContent === section.key"
     >
-      <img [src]="section.icon" alt="{{ section.label }} icon" class="button-icon" />
       {{ section.label }}
     </button>
   </div>
@@ -26,9 +25,7 @@
     } @else if (currentContent === 'accounts') {
     <app-accounts></app-accounts>
     } @else if (currentContent === 'brokers') {
-    <div>Brokers content here...
-      <img src="../../../assets/images/file.svg" alt="">
-    </div>
+    <div>Brokers content here...</div>
     } @else if (currentContent === 'submissions') {
     <div>Submissions content here...</div>
     } @else if (currentContent === 'organizations') {

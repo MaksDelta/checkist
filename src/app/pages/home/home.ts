@@ -15,13 +15,13 @@ export class HomeComponent {
   currentContent: string = '';
 
   sections = [
-    { key: 'dashboard', label: 'Dashboard', icon: 'assets/images/home.svg' },
-    { key: 'accounts', label: 'Accounts', icon: 'assets/images/coin.svg' },
-    { key: 'brokers', label: 'Brokers', icon: 'assets/images/users.svg' },
-    { key: 'submissions', label: 'Submissions', icon: 'assets/images/file.svg' },
-    { key: 'organizations', label: 'Organizations', icon: 'assets/images/buildings.svg' },
-    { key: 'goals', label: 'Goals & Rules', icon: 'assets/images/flag.svg' },
-    { key: 'admin', label: 'Admin', icon: 'assets/images/key.svg' },
+    { key: 'dashboard', label: 'Dashboard' },
+    { key: 'accounts', label: 'Accounts' },
+    { key: 'brokers', label: 'Brokers' },
+    { key: 'submissions', label: 'Submissions', },
+    { key: 'organizations', label: 'Organizations' },
+    { key: 'goals', label: 'Goals & Rules' },
+    { key: 'admin', label: 'Admin' },
   ];
 
   setContent(section: string) {

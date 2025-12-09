@@ -25,11 +25,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of queueData">
-              <td>{{ item.originator }}</td>
-              <td>{{ item.clientLine }}</td>
+              <td>{{ item.id }}</td>
               <td>{{ item.type }}</td>
-              <td>{{ item.status }}</td>
-              <td>{{ item.created }}</td>
+              <td>{{ item.priority }}</td>
+              <td>{{ item.account }}</td>
+              <td>{{ item.due }}</td>
               <td>
                 <button (click)="editItem(item)">Edit</button>
                 <button (click)="deleteItem(item)">Delete</button>
@@ -67,8 +67,59 @@
     <div class="accounts-nav">
       <h2>My accounts</h2>
       <input type="text" placeholder="Search" />
-      <div class="button-row"></div>
+      <div class="button-row">
+        <button
+          *ngFor="let section of accounts"
+          (click)="setContent(section.key)"
+          [class.active]="currentContent === section.key"
+        >
+          {{ section.label }}
+        </button>
+      </div>
     </div>
-    <div class="table"></div>
+    <div class="table-accounts">
+      <table>
+        <thead>
+          <tr>
+            <th>Account Name/Type</th>
+            <th>Line</th>
+            <th>Broker</th>
+            <th>Renewal Date</th>
+            <th>Premium</th>
+            <th>Rated Premium</th>
+            <th>Loss Ratio</th>
+            <th>Appetite</th>
+            <th>Status</th>
+            <th>Triage</th>
+            <th>Winability</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let policy of policiesData">
+            <td>{{ policy.name }} / {{ policy.lob }}</td>
+            <td>{{ policy.line }}</td>
+            <td>{{ policy.broker }}</td>
+            <td>{{ policy.expiration }}</td>
+            <td>{{ policy.premium }}</td>
+            <td>{{ policy.ratedPremium }}</td>
+            <td>{{ policy.lossRatio }}</td>
+            <td>{{ policy.appetite }}</td>
+            <td>{{ policy.status }}</td>
+            <td>{{ policy.triage }}</td>
+            <td>{{ policy.winability }}</td>
+            <td class="menu-cell">
+              <div class="menu-wrapper" (click)="toggleMenu(policy.id)">
+                <div class="dots-vertical">⋮</div>
+                <div class="menu-options" *ngIf="openedMenuId === policy.id">
+                  <button (click)="editPolicy(policy)">Edit</button>
+                  <button (click)="deletePolicy(policy)">Delete</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

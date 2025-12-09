@@ -4,11 +4,28 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export interface QueueItem {
   id: number;
-  originator: string;
-  clientLine: string;
   type: string;
+  priority: string;
+  account: string;
+  due: string;
+}
+
+export interface Policy {
+  id: number;
+  accountId: number;
+  name: string;
+  lob: string;
+  line?: string;
+  broker?: string;
+  premium: number;
+  ratedPremium?: number;
+  lossRatio?: number;
+  appetite?: string;
   status: string;
-  created: string;
+  triage?: string;
+  winability?: string;
+  effective?: string;
+  expiration?: string;
 }
 
 @Component({
@@ -19,6 +36,7 @@ export interface QueueItem {
 })
 export class DashboardComponent {
   queueData: QueueItem[] = [];
+  policiesData: Policy[] = [];
   currentContent: string = '';
   openedMenuId: number | null = null;
   menuPosition = { top: 0, left: 0 };
@@ -28,7 +46,7 @@ export class DashboardComponent {
     { key: 'review', label: 'Pending review' },
     { key: 'referrals', label: 'Referrals' },
   ];
-  
+
   actions = [
     { key: 'submision', label: 'New Submision' },
     { key: 'quote', label: 'Quote builder' },
@@ -36,17 +54,33 @@ export class DashboardComponent {
     { key: 'upload', label: 'Documents Upload' },
   ];
 
+  accounts = [
+    { key: 'filter', label: 'Filter' },
+    { key: 'sort', label: 'Sort' },
+    { key: 'group', label: 'Group' },
+    { key: 'new', label: '+New' },
+  ];
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.loadQueue();
+    this.loadPolicies();
   }
 
   loadQueue() {
-    this.http.get<QueueItem[]>('assets/data/queue.json').subscribe({
+    this.http.get<any>('assets/data/seed.json').subscribe({
       next: (data) => {
-        console.log('Queue loaded', data);
-        this.queueData = data;
+        this.queueData = data.workQueue;
+      },
+      error: (err) => console.error('Cannot load JSON', err),
+    });
+  }
+
+  loadPolicies() {
+    this.http.get<any>('assets/data/seed.json').subscribe({
+      next: (data) => {
+        this.policiesData = data.policies;
       },
       error: (err) => console.error('Cannot load JSON', err),
     });
@@ -58,6 +92,14 @@ export class DashboardComponent {
 
   deleteItem(item: QueueItem) {
     this.queueData = this.queueData.filter((q) => q.id !== item.id);
+  }
+
+  editPolicy(policy: Policy) {
+    console.log('Edit Policy', policy);
+  }
+
+  deletePolicy(policy: Policy) {
+    this.policiesData = this.policiesData.filter((p) => p.id !== policy.id);
   }
 
   setContent(section: string) {
