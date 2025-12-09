@@ -1,1 +1,74 @@
-<p>dashboard works!</p>
+<div class="container">
+  <div class="info-box">
+    <div class="queue">
+      <h2>Work queue</h2>
+      <div class="button-row">
+        <button
+          *ngFor="let section of queue"
+          (click)="setContent(section.key)"
+          [class.active]="currentContent === section.key"
+        >
+          {{ section.label }}
+        </button>
+      </div>
+      <div class="table-queue">
+        <table>
+          <thead>
+            <tr>
+              <th>Originator</th>
+              <th>Client / Line</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of queueData">
+              <td>{{ item.originator }}</td>
+              <td>{{ item.clientLine }}</td>
+              <td>{{ item.type }}</td>
+              <td>{{ item.status }}</td>
+              <td>{{ item.created }}</td>
+              <td>
+                <button (click)="editItem(item)">Edit</button>
+                <button (click)="deleteItem(item)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="goals">
+      <h2>Portfolio goals</h2>
+    </div>
+
+    <div class="options">
+      <div class="actions">
+        <h2>Quick actions</h2>
+        <div class="button-col">
+          <button
+            *ngFor="let section of actions"
+            (click)="setContent(section.key)"
+            [class.active]="currentContent === section.key"
+          >
+            {{ section.label }}
+          </button>
+        </div>
+      </div>
+      <div class="intelligence">
+        <h2>Market intelligence</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="accounts">
+    <div class="accounts-nav">
+      <h2>My accounts</h2>
+      <input type="text" placeholder="Search" />
+      <div class="button-row"></div>
+    </div>
+    <div class="table"></div>
+  </div>
+</div>

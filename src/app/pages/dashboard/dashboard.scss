@@ -1,0 +1,193 @@
+@use '../../../assets/styles/variables' as *;
+
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 20px;
+}
+
+.info-box {
+  display: grid;
+  grid-template-columns: 53% 22% 22%;
+  gap: 20px;
+
+  .queue,
+  .goals {
+    background-color: $color-light-blue-gray;
+    color: white;
+    border-radius: 25px;
+    padding: 20px 15px 20px 15px;
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin: 0;
+      background: none;
+    }
+  }
+
+  .queue {
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0 20px 0;
+      background: none;
+
+      button {
+        padding: 6px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        border-radius: 30px;
+        border: 0;
+        outline: none;
+        height: 35px;
+        background-color: $color-dark-gray;
+        color: $color-light-gray;
+        font-weight: 400;
+        cursor: pointer;
+        gap: 10px;
+
+        .button-icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        &:hover {
+          background-color: $color-vivid-blue;
+          color: $color-white;
+        }
+
+        &.active {
+          background-color: $color-vivid-blue;
+          color: $color-white;
+        }
+      }
+    }
+
+    .table-queue {
+      table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th,
+        td {
+          padding: 10px;
+          text-align: left;
+          border-bottom: 1px solid #ccc;
+        }
+
+        th {
+          background-color: #2a2a2a;
+          color: white;
+        }
+
+        td {
+          background-color: #1f1f1f;
+          color: white;
+        }
+
+        button {
+          margin-right: 5px;
+          padding: 5px 10px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          background-color: #3a3a3a;
+          color: white;
+
+          &:hover {
+            background-color: #0055ff;
+          }
+        }
+      }
+    }
+  }
+
+  .options {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+
+    .actions {
+      background-color: $color-light-blue-gray;
+      color: white;
+      border-radius: 25px;
+      padding: 20px 15px 20px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+
+      h2 {
+        background: none;
+      }
+
+      .button-col {
+        background: none;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        button {
+          padding: 10px 15px;
+          font-size: 1rem;
+          font-weight: 500;
+          color: $color-white;
+          background-color: $color-vivid-blue;
+          border: none;
+          border-radius: 25px;
+          cursor: pointer;
+          transition: background-color 0.2s, color 0.2s;
+
+          &:hover {
+            background-color: $color-vivid-blue;
+            color: $color-white;
+          }
+        }
+      }
+    }
+
+    .intelligence {
+      background-color: $color-light-blue-gray;
+      color: white;
+      border-radius: 25px;
+      padding: 20px 15px 20px 15px;
+
+      h2 {
+        background: none;
+      }
+    }
+  }
+}
+
+.accounts {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background-color: $color-light-blue-gray;
+  gap: 10px;
+
+  .accounts-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+    }
+  }
+
+  .table {
+    height: 300px;
+    border-radius: 10px;
+  }
+}
