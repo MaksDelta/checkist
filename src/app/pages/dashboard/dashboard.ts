@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FormsModule } from '@angular/forms';
 import { QueueItem, Policy } from './dashboard.models';
-import { QUEUE_SECTIONS, ACTIONS, ACCOUNTS_ACTIONS } from './dashboard.constants';
+import { QUEUE_SECTIONS, ACTIONS, ACCOUNTS_ACTIONS, GOALS } from './dashboard.constants';
 import { DashboardService } from './dashboard.service';
 import { filterPolicies, sortByName, groupByLob } from './dashboard.utils';
 import { EditModalComponent } from './edit-modal/edit-modal';
@@ -30,6 +30,7 @@ export class DashboardComponent {
   queue = QUEUE_SECTIONS;
   actions = ACTIONS;
   accounts = ACCOUNTS_ACTIONS;
+  stackedGoals = GOALS;
   selectedItem: any = null;
   isModalVisible = false;
 
@@ -152,5 +153,13 @@ export class DashboardComponent {
     if (!target.closest('.queue .menu-wrapper')) {
       this.openedQueueMenuId = null;
     }
+  }
+
+  trackByGoal(index: number, item: any) {
+    return item.name;
+  }
+
+  trackByPart(index: number, item: any) {
+    return item.color + item.value;
   }
 }

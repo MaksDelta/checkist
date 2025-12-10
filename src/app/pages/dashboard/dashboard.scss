@@ -172,6 +172,89 @@
     }
   }
 
+  .goals {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .progress-container {
+      margin-bottom: 15px;
+      background: none;
+    }
+
+    .progress-label {
+      margin-bottom: 6px;
+      font-weight: 300;
+      font-size: 1rem;
+      background: none;
+    }
+
+    .progress-bar-wrapper {
+      position: relative;
+      width: 95%;
+    }
+
+    .progress-bar {
+      display: flex;
+      height: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: $color-table-text;
+      position: relative;
+
+      .progress-segment {
+        height: 100%;
+        border-radius: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .progress-inside {
+          font-size: 0.75rem;
+          color: $color-white;
+          position: relative;
+          z-index: 2;
+        }
+
+        .progress-text {
+          background: none;
+          color: $color-white;
+          font-size: 0.875rem;
+          position: relative;
+          z-index: 2;
+        }
+      }
+
+      .progress-segment:last-child {
+        border-radius: 0 15px 15px 0;
+      }
+    }
+
+    .progress-container:nth-child(4) .progress-segment {
+      background: linear-gradient(90deg, $color-table-text 0%, $color-vivid-blue 100%);
+    }
+
+    .progress-container:nth-child(5) .progress-segment {
+      background: linear-gradient(90deg, $color-table-text 0%, $color-vivid-blue 100%);
+    }
+
+    .progress-values {
+      background: none;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5px;
+      width: 100%;
+
+      .progress-value {
+        background: none;
+        text-align: center;
+        font-size: 0.625rem;
+        color: $color-white;
+      }
+    }
+  }
+
   .options {
     display: grid;
     grid-template-rows: 1fr 1fr;

@@ -37,10 +37,12 @@
                 <td class="menu-cell">
                   <div class="menu-wrapper" (click)="toggleQueueMenu(item.id)">
                     <div class="dots-vertical">⋮</div>
-                    <div class="menu-options" *ngIf="openedQueueMenuId === item.id">
+                    @if (openedQueueMenuId === item.id) {
+                    <div class="menu-options">
                       <button (click)="editItem(item)">Edit</button>
                       <button (click)="deleteItem(item)">Delete</button>
                     </div>
+                    }
                   </div>
                 </td>
               </tr>
@@ -52,6 +54,30 @@
 
     <div class="goals">
       <h2>Portfolio goals</h2>
+
+      <div *ngFor="let goal of stackedGoals; trackBy: trackByGoal" class="progress-container">
+        <div class="progress-label">{{ goal.name }}</div>
+        <div class="progress-bar">
+          <div
+            *ngFor="let part of goal.parts; trackBy: trackByPart"
+            class="progress-segment"
+            [style.width.%]="part.value"
+            [style.backgroundColor]="part.color"
+            [title]="part.value + '%'"
+          >
+            @if (stackedGoals.indexOf(goal) >= stackedGoals.length - 2) {
+            <span class="progress-text">{{ part.label }}%</span>
+            }
+          </div>
+        </div>
+        @if (stackedGoals.indexOf(goal) >= 2) {
+        <div class="progress-values">
+          <span *ngFor="let part of goal.parts" [style.width.%]="part.value" class="progress-value">
+            {{ part.value }}%
+          </span>
+        </div>
+        }
+      </div>
     </div>
 
     <div class="options">
@@ -121,9 +147,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngIf="filteredPoliciesData.length === 0">
+            @if (filteredPoliciesData.length === 0) {
+            <tr>
               <td colspan="12" class="no-results">No results found</td>
             </tr>
+            }
             <tr *cdkVirtualFor="let policy of filteredPoliciesData">
               <td>{{ policy.name }} / {{ policy.lob }}</td>
               <td>{{ policy.line }}</td>
@@ -152,10 +180,10 @@
     </div>
   </div>
 </div>
+
 <app-edit-modal
   [data]="selectedItem"
   [visible]="isModalVisible"
   (close)="onModalClose()"
   (save)="onModalSave($event)"
 ></app-edit-modal>
-
