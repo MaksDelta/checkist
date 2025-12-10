@@ -18,13 +18,33 @@ export class EditModalComponent {
   clonedData: any = {};
 
   ngOnChanges() {
-    if (this.data) {
+    if (!this.data || Object.keys(this.data).length === 0) {
+      this.clonedData = {
+        name: '',
+        lob: '',
+        line: '',
+        broker: '',
+        expiration: '',
+        premium: '',
+        ratedPremium: '',
+        lossRatio: '',
+        appetite: '',
+        status: '',
+        triage: '',
+        winability: '',
+      };
+    } else {
       this.clonedData = { ...this.data };
     }
   }
 
-  onSave() {
+  onSave(form: any) {
+    if (!form.valid) {
+      Object.values(form.controls).forEach((ctrl: any) => ctrl.markAsTouched());
+      return;
+    }
     this.save.emit(this.clonedData);
+    this.onClose();
   }
 
   onClose() {

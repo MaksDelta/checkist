@@ -89,11 +89,17 @@ export class DashboardComponent {
         this.filteredPoliciesData = groupByLob(this.policiesData);
         break;
       case 'new':
+        this.addNewPolicy();
         break;
       default:
         this.filteredPoliciesData = [...this.policiesData];
         break;
     }
+  }
+
+  addNewPolicy() {
+    this.selectedItem = {};
+    this.isModalVisible = true;
   }
 
   editItem(item: QueueItem) {
@@ -108,11 +114,26 @@ export class DashboardComponent {
 
   onModalSave(updated: any) {
     if ('due' in updated) {
-      this.queueData = this.queueData.map((q) => (q.id === updated.id ? updated : q));
+      const index = this.queueData.findIndex((q) => q.id === updated.id);
+      if (index !== -1) {
+        this.queueData[index] = updated;
+      } else {
+        updated.id = this.queueData.length ? Math.max(...this.queueData.map((q) => q.id)) + 1 : 1;
+        this.queueData.push(updated);
+      }
     } else {
-      this.policiesData = this.policiesData.map((p) => (p.id === updated.id ? updated : p));
+      const index = this.policiesData.findIndex((p) => p.id === updated.id);
+      if (index !== -1) {
+        this.policiesData[index] = updated;
+      } else {
+        updated.id = this.policiesData.length
+          ? Math.max(...this.policiesData.map((p) => p.id)) + 1
+          : 1;
+        this.policiesData.push(updated);
+      }
       this.filteredPoliciesData = [...this.policiesData];
     }
+
     this.isModalVisible = false;
   }
 
@@ -120,7 +141,7 @@ export class DashboardComponent {
     this.isModalVisible = false;
   }
 
-    @HostListener('document:click', ['$event'])
+  @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
 

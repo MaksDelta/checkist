@@ -1,19 +1,31 @@
 @if (visible) {
 <div class="modal-backdrop" (click)="onBackdropClick($event)">
-  <div class="modal">
+  <div class="modal" (click)="$event.stopPropagation()">
     <h2>Edit Item</h2>
 
-    <div class="form">
-      <div *ngFor="let key of keys">
-        <label>{{ key }}</label>
-        <input [(ngModel)]="clonedData[key]" />
+        <form #editForm="ngForm">
+      <div class="form">
+        <div *ngFor="let key of keys">
+          <label>{{ key }}</label>
+          <input
+            [(ngModel)]="clonedData[key]"
+            name="{{ key }}"
+            required
+            #field="ngModel"
+          />
+          @if (field.invalid && field.touched) {
+              <div class="error">
+                This field is required
+              </div>
+            }
+        </div>
       </div>
-    </div>
 
-    <div class="actions">
-      <button (click)="onSave()">Save</button>
-      <button (click)="onClose()">Cancel</button>
-    </div>
+      <div class="actions">
+        <button type="button" (click)="onSave(editForm)">Save</button>
+        <button type="button" (click)="onClose()">Cancel</button>
+      </div>
+    </form>
   </div>
 </div>
 }

@@ -56,6 +56,11 @@
       background: $color-gray;
     }
   }
+
+  .error {
+    font-size: 0.875rem;
+    color: $color-error;
+  }
 }
 
 .actions {
