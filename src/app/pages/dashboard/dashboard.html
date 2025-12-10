@@ -152,3 +152,10 @@
     </div>
   </div>
 </div>
+<app-edit-modal
+  [data]="selectedItem"
+  [visible]="isModalVisible"
+  (close)="onModalClose()"
+  (save)="onModalSave($event)"
+></app-edit-modal>
+

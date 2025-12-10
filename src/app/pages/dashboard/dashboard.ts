@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -7,11 +7,12 @@ import { QueueItem, Policy } from './dashboard.models';
 import { QUEUE_SECTIONS, ACTIONS, ACCOUNTS_ACTIONS } from './dashboard.constants';
 import { DashboardService } from './dashboard.service';
 import { filterPolicies, sortByName, groupByLob } from './dashboard.utils';
+import { EditModalComponent } from './edit-modal/edit-modal';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, ScrollingModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, ScrollingModule, FormsModule, EditModalComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   providers: [DashboardService],
@@ -29,6 +30,8 @@ export class DashboardComponent {
   queue = QUEUE_SECTIONS;
   actions = ACTIONS;
   accounts = ACCOUNTS_ACTIONS;
+  selectedItem: any = null;
+  isModalVisible = false;
 
   constructor(private dashboardService: DashboardService) {}
 
@@ -40,16 +43,8 @@ export class DashboardComponent {
     });
   }
 
-  editItem(item: QueueItem) {
-    console.log('Edit', item);
-  }
-
   deleteItem(item: QueueItem) {
     this.queueData = this.queueData.filter((q) => q.id !== item.id);
-  }
-
-  editPolicy(policy: Policy) {
-    console.log('Edit Policy', policy);
   }
 
   deletePolicy(policy: Policy) {
@@ -98,6 +93,43 @@ export class DashboardComponent {
       default:
         this.filteredPoliciesData = [...this.policiesData];
         break;
+    }
+  }
+
+  editItem(item: QueueItem) {
+    this.selectedItem = item;
+    this.isModalVisible = true;
+  }
+
+  editPolicy(policy: Policy) {
+    this.selectedItem = policy;
+    this.isModalVisible = true;
+  }
+
+  onModalSave(updated: any) {
+    if ('due' in updated) {
+      this.queueData = this.queueData.map((q) => (q.id === updated.id ? updated : q));
+    } else {
+      this.policiesData = this.policiesData.map((p) => (p.id === updated.id ? updated : p));
+      this.filteredPoliciesData = [...this.policiesData];
+    }
+    this.isModalVisible = false;
+  }
+
+  onModalClose() {
+    this.isModalVisible = false;
+  }
+
+    @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    if (!target.closest('.menu-wrapper')) {
+      this.openedMenuId = null;
+    }
+
+    if (!target.closest('.queue .menu-wrapper')) {
+      this.openedQueueMenuId = null;
     }
   }
 }

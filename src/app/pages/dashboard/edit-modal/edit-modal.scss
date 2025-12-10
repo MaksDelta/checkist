@@ -1,0 +1,93 @@
+@use '../../../../assets/styles/variables' as *;
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.modal {
+  background: $color-blue-gray;
+  padding: 25px 35px;
+  width: 400px;
+  border-radius: 25px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  color: $color-white;
+
+  h2 {
+    margin-bottom: 20px;
+    font-weight: 300;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
+
+  label {
+    font-size: 0.875rem;
+  }
+
+  input {
+    width: 94%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid lighten($color-blue-gray, 20%);
+    background: lighten($color-blue-gray, 10%);
+    color: $color-dark-blue-gray;
+    font-size: 1rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: lighten($color-blue-gray, 40%);
+      background: $color-gray;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+
+  button {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:first-child {
+      background: $color-vivid-blue;
+      color: $color-white;
+
+      &:hover {
+        background: darken($color-vivid-blue, 10%);
+      }
+    }
+
+    &:last-child {
+      background: lighten($color-blue-gray, 20%);
+      color: $color-vivid-blue;
+
+      &:hover {
+        background: lighten($color-blue-gray, 10%);
+      }
+    }
+  }
+}

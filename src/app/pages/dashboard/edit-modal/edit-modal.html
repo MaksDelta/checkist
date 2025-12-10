@@ -1,0 +1,19 @@
+@if (visible) {
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal">
+    <h2>Edit Item</h2>
+
+    <div class="form">
+      <div *ngFor="let key of keys">
+        <label>{{ key }}</label>
+        <input [(ngModel)]="clonedData[key]" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button (click)="onSave()">Save</button>
+      <button (click)="onClose()">Cancel</button>
+    </div>
+  </div>
+</div>
+}
