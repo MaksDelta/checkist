@@ -3,13 +3,11 @@
     <div class="queue">
       <h2>Work queue</h2>
       <div class="button-row">
-        <button
-          *ngFor="let section of queue"
-          (click)="setContent(section.key)"
-          [class.active]="currentContent === section.key"
-        >
+        @for (section of queue; track $index) {
+        <button (click)="setContent(section.key)" [class.active]="currentContent === section.key">
           {{ section.label }} ({{ getQueueCount(section.key) }})
         </button>
+        }
       </div>
 
       <div class="table-queue">
@@ -56,11 +54,12 @@
     <div class="goals">
       <h2>Portfolio goals</h2>
 
-      <div *ngFor="let goal of stackedGoals; trackBy: trackByGoal" class="progress-container">
+      @for (goal of stackedGoals; track $index) {
+      <div class="progress-container">
         <div class="progress-label">{{ goal.name }}</div>
         <div class="progress-bar">
+          @for (part of goal.parts; track $index) {
           <div
-            *ngFor="let part of goal.parts; trackBy: trackByPart"
             class="progress-segment"
             [style.width.%]="part.value"
             [style.backgroundColor]="part.color"
@@ -70,28 +69,30 @@
             <span class="progress-text">{{ part.label }}%</span>
             }
           </div>
+        }
         </div>
         @if (stackedGoals.indexOf(goal) >= 2) {
         <div class="progress-values">
-          <span *ngFor="let part of goal.parts" [style.width.%]="part.value" class="progress-value">
+          @for (part of goal.parts; track $index) {
+          <span [style.width.%]="part.value" class="progress-value">
             {{ part.value }}%
           </span>
+        }
         </div>
         }
       </div>
+    }
     </div>
 
     <div class="options">
       <div class="actions">
         <h2>Quick actions</h2>
         <div class="button-col">
-          <button
-            *ngFor="let section of actions"
-            (click)="setContent(section.key)"
-            [class.active]="currentContent === section.key"
-          >
+          @for (section of actions; track $index) {
+          <button (click)="setContent(section.key)" [class.active]="currentContent === section.key">
             {{ section.label }}
           </button>
+          }
         </div>
       </div>
       <div class="intelligence">
@@ -119,13 +120,11 @@
       <h2>My accounts</h2>
       <input type="text" placeholder="Search" [(ngModel)]="searchTerm" (input)="filterPolicies()" />
       <div class="button-row">
-        <button
-          *ngFor="let section of accounts"
-          (click)="setAccounts(section.key)"
-          [class.active]="currentContent === section.key"
-        >
+        @for (section of accounts; track $index) {
+        <button (click)="setAccounts(section.key)" [class.active]="currentContent === section.key">
           {{ section.label }}
         </button>
+        }
       </div>
     </div>
     <div class="table-accounts">
@@ -168,10 +167,12 @@
               <td class="menu-cell">
                 <div class="menu-wrapper" (click)="toggleMenu(policy.id)">
                   <div class="dots-vertical">⋮</div>
-                  <div class="menu-options" *ngIf="openedMenuId === policy.id">
+                  @if (openedMenuId === policy.id) {
+                  <div class="menu-options">
                     <button (click)="editPolicy(policy)">Edit</button>
                     <button (click)="deletePolicy(policy)">Delete</button>
                   </div>
+                  }
                 </div>
               </td>
             </tr>

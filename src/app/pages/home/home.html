@@ -10,13 +10,11 @@
   </div>
 
   <div class="button-row">
-    <button
-      *ngFor="let section of sections"
-      (click)="setContent(section.key)"
-      [class.active]="currentContent === section.key"
-    >
+    @for (section of sections; track $index) {
+    <button (click)="setContent(section.key)" [class.active]="currentContent === section.key">
       {{ section.label }}
     </button>
+    }
   </div>
 
   <div class="content-zone">

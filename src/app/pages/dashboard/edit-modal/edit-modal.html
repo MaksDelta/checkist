@@ -5,7 +5,8 @@
 
         <form #editForm="ngForm">
       <div class="form">
-        <div *ngFor="let key of keys">
+        @for (key of keys; track $index) {
+        <div>
           <label>{{ key }}</label>
           <input
             [(ngModel)]="clonedData[key]"
@@ -19,6 +20,7 @@
               </div>
             }
         </div>
+      }
       </div>
 
       <div class="actions">

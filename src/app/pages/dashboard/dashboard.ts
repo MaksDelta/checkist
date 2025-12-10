@@ -130,22 +130,32 @@ export class DashboardComponent {
 
   onModalSave(updated: any) {
     if ('due' in updated) {
-      const index = this.queueData.findIndex((q) => q.id === updated.id);
+      const index = this.queueDataBackup.findIndex((q) => q.id === updated.id);
       if (index !== -1) {
-        this.queueData[index] = updated;
+        this.queueDataBackup[index] = { ...updated };
       } else {
-        updated.id = this.queueData.length ? Math.max(...this.queueData.map((q) => q.id)) + 1 : 1;
-        this.queueData.push(updated);
+        updated.id = this.queueDataBackup.length
+          ? Math.max(...this.queueDataBackup.map((q) => q.id)) + 1
+          : 1;
+        this.queueDataBackup.push({ ...updated });
+      }
+
+      if (this.currentContent === 'assigned') {
+        this.queueData = [...this.queueDataBackup];
+      } else if (this.currentContent === 'review') {
+        this.queueData = this.queueDataBackup.filter((item) => item.account === 'Pending review');
+      } else if (this.currentContent === 'referrals') {
+        this.queueData = this.queueDataBackup.filter((item) => item.account === 'New');
       }
     } else {
       const index = this.policiesData.findIndex((p) => p.id === updated.id);
       if (index !== -1) {
-        this.policiesData[index] = updated;
+        this.policiesData[index] = { ...updated };
       } else {
         updated.id = this.policiesData.length
           ? Math.max(...this.policiesData.map((p) => p.id)) + 1
           : 1;
-        this.policiesData.push(updated);
+        this.policiesData.push({ ...updated });
       }
       this.filteredPoliciesData = [...this.policiesData];
     }

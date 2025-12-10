@@ -1,9 +1,37 @@
-<div class="container">
+<div class="wrapper">
   <div class="account-details">
-    <h2>Account Details</h2>
-    <div class="details-container">
-      <div class="menu"></div>
-      <div class="content"></div>
+    <div class="menu">
+      @for (item of menuItems; track i; let i = $index) {
+
+      <div class="menu-item">
+        <div class="menu-button" [class.active]="activeIndex === i" (click)="toggleItem(i)">
+          {{ item.title }}
+        </div>
+
+        <div class="inner-buttons" [class.active]="activeIndex === i">
+          @for (btn of item.buttons; track btn; let j =
+          $index) {
+          <button
+            [class.active]="activeButtonIndex === j && activeIndex === i"
+            (click)="setActiveButton(j)"
+          >
+            {{ btn }}
+          </button>
+          } 
+        </div>
+
+        <div class="menu-content" [class.active]="activeIndex === i">
+          {{ item.content }}
+        </div>
+      </div>
+      }
+    </div>
+
+    <div class="content-zone">
+      <h3>{{ currentHeader }}</h3>
+      <div class="all-graph">
+        
+      </div>
     </div>
   </div>
 </div>
