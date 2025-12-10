@@ -56,45 +56,84 @@
   }
 
   .button-row {
-    display: flex;
-    gap: 10px;
-    margin: 20px 0 20px 75px;
+  display: flex;
+  gap: 10px;
+  margin: 20px 0 20px 0;
+  padding-left: 75px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 
-    button {
-      padding: 12px 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  button {
+    flex: 0 0 auto;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    border-radius: 30px;
+    border: 0;
+    outline: none;
+    height: 50px;
+    background-color: $color-dark-gray;
+    color: $color-light-gray;
+    border: 1px solid $color-gray;
+    font-weight: 400;
+    cursor: pointer;
+    gap: 10px;
+
+    .button-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      background-color: $color-vivid-blue;
+      color: $color-white;
+    }
+
+    &.active {
+      background-color: $color-vivid-blue;
+      color: $color-white;
+    }
+  }
+}
+
+  .content-zone {
+    margin: 0 75px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .home-container {
+  .title {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+      margin-left: 0;
+      text-align: center;
+    }
+
+    .search {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.125rem;
-      border-radius: 30px;
-      border: 0;
-      outline: none;
-      height: 50px;
-      background-color: $color-dark-gray;
-      color: $color-light-gray;
-      border: 1px solid $color-gray;
-      font-weight: 400;
-      cursor: pointer;
-      gap: 10px;
-
-      .button-icon {
-        width: 20px;
-        height: 20px;
-      }
-
-      &:hover {
-        background-color: $color-vivid-blue;
-        color: $color-white;
-      }
-
-      &.active {
-        background-color: $color-vivid-blue;
-        color: $color-white;
-      }
     }
   }
-
-  .content-zone {
-    margin-left: 75px;
+    .content-zone {
+    margin: 0 50px;
   }
+}
 }
