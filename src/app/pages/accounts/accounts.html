@@ -9,15 +9,14 @@
         </div>
 
         <div class="inner-buttons" [class.active]="activeIndex === i">
-          @for (btn of item.buttons; track btn; let j =
-          $index) {
+          @for (btn of item.buttons; track btn; let j = $index) {
           <button
             [class.active]="activeButtonIndex === j && activeIndex === i"
             (click)="setActiveButton(j)"
           >
             {{ btn }}
           </button>
-          } 
+          }
         </div>
 
         <div class="menu-content" [class.active]="activeIndex === i">
@@ -30,7 +29,31 @@
     <div class="content-zone">
       <h3>{{ currentHeader }}</h3>
       <div class="all-graph">
-        
+        <div class="graph-row top-row">
+          <div class="graph first">
+            <h3>Overall Score</h3>
+            <div class="score">
+              <h3>82%</h3>
+              <div class="description">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="text">Very Strong</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="graph second">
+            <canvas #curveCanvas class="curve"></canvas>
+          </div>
+          <div class="graph">Графік 3</div>
+        </div>
+
+        <div class="graph-row bottom-row">
+          <div class="graph">Графік 4</div>
+          <div class="graph">Графік 5</div>
+        </div>
       </div>
     </div>
   </div>

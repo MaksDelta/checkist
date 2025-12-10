@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Chart, registerables } from 'chart.js';
+import { lineChartConfig } from './chart-config';
+
+Chart.register(...registerables);
 
 interface MenuItem {
   title: string;
@@ -10,8 +14,11 @@ interface MenuItem {
   selector: 'app-accounts',
   templateUrl: './accounts.html',
   styleUrls: ['./accounts.scss'],
+  standalone: true,
 })
-export class AccountsComponent {
+export class AccountsComponent implements AfterViewInit {
+  @ViewChild('curveCanvas') curveCanvas!: ElementRef<HTMLCanvasElement>;
+
   menuItems: MenuItem[] = [
     {
       title: 'DESICION SUPPORT',
@@ -39,6 +46,8 @@ export class AccountsComponent {
   activeButtonIndex: number | null = null;
   currentHeader: string = this.menuItems[0].buttons[0];
 
+  private chart!: Chart;
+
   toggleItem(index: number) {
     if (this.activeIndex === index) {
       this.activeIndex = -1;
@@ -48,6 +57,7 @@ export class AccountsComponent {
       this.activeButtonIndex = 0;
       this.currentHeader = this.menuItems[index].buttons[0];
     }
+    this.updateChart();
   }
 
   setActiveButton(buttonIndex: number) {
@@ -55,5 +65,19 @@ export class AccountsComponent {
     if (this.activeIndex >= 0) {
       this.currentHeader = this.menuItems[this.activeIndex].buttons[buttonIndex];
     }
+    this.updateChart();
+  }
+
+  ngAfterViewInit(): void {
+    this.chart = new Chart(this.curveCanvas.nativeElement, lineChartConfig);
+  }
+
+  updateChart() {
+    if (!this.chart) return;
+
+    this.chart.data.datasets[0].data = Array.from({ length: 6 }, () =>
+      Math.floor(Math.random() * 20)
+    );
+    this.chart.update();
   }
 }
