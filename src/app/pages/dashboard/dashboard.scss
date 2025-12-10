@@ -559,3 +559,47 @@
     }
   }
 }
+
+@media (max-width: 1300px) {
+  .info-box {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 53% 47%;
+    gap: 15px;
+    grid-template-areas:
+      'main main'
+      'left right';
+
+    .queue {
+      grid-area: main;
+    }
+
+    .goals {
+      grid-area: left;
+    }
+
+    .options {
+      grid-area: right;
+    }
+  }
+
+  .accounts {
+    width: 98%;
+
+    .accounts-nav {
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+
+    .table-accounts {
+      table {
+        th,
+        td {
+          font-weight: 200;
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
+}
