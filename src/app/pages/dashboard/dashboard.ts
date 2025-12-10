@@ -1,89 +1,42 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
-export interface QueueItem {
-  id: number;
-  name: string;
-  type: string;
-  priority: string;
-  account: string;
-  due: string;
-}
-
-export interface Policy {
-  id: number;
-  accountId: number;
-  name: string;
-  lob: string;
-  line?: string;
-  broker?: string;
-  premium: number;
-  ratedPremium?: number;
-  lossRatio?: number;
-  appetite?: string;
-  status: string;
-  triage?: string;
-  winability?: string;
-  effective?: string;
-  expiration?: string;
-}
+import { HttpClientModule } from '@angular/common/http';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { FormsModule } from '@angular/forms';
+import { QueueItem, Policy } from './dashboard.models';
+import { QUEUE_SECTIONS, ACTIONS, ACCOUNTS_ACTIONS } from './dashboard.constants';
+import { DashboardService } from './dashboard.service';
+import { filterPolicies, sortByName, groupByLob } from './dashboard.utils';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, HttpClientModule],
+  standalone: true,
+  imports: [CommonModule, HttpClientModule, ScrollingModule, FormsModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
+  providers: [DashboardService],
 })
 export class DashboardComponent {
   queueData: QueueItem[] = [];
   policiesData: Policy[] = [];
+  queueDataBackup: QueueItem[] = [];
   currentContent: string = '';
+  searchTerm: string = '';
+  filteredPoliciesData: Policy[] = [];
+  openedQueueMenuId: number | null = null;
   openedMenuId: number | null = null;
   menuPosition = { top: 0, left: 0 };
+  queue = QUEUE_SECTIONS;
+  actions = ACTIONS;
+  accounts = ACCOUNTS_ACTIONS;
 
-  queue = [
-    { key: 'assigned', label: 'Assignet to me' },
-    { key: 'review', label: 'Pending review' },
-    { key: 'referrals', label: 'Referrals' },
-  ];
-
-  actions = [
-    { key: 'submision', label: 'New Submision' },
-    { key: 'quote', label: 'Quote builder' },
-    { key: 'models', label: 'Risks Models' },
-    { key: 'upload', label: 'Documents Upload' },
-  ];
-
-  accounts = [
-    { key: 'filter', label: 'Filter' },
-    { key: 'sort', label: 'Sort' },
-    { key: 'group', label: 'Group' },
-    { key: 'new', label: '+New' },
-  ];
-
-  constructor(private http: HttpClient) {}
+  constructor(private dashboardService: DashboardService) {}
 
   ngOnInit() {
-    this.loadQueue();
-    this.loadPolicies();
-  }
-
-  loadQueue() {
-    this.http.get<any>('assets/data/seed.json').subscribe({
-      next: (data) => {
-        this.queueData = data.workQueue;
-      },
-      error: (err) => console.error('Cannot load JSON', err),
-    });
-  }
-
-  loadPolicies() {
-    this.http.get<any>('assets/data/seed.json').subscribe({
-      next: (data) => {
-        this.policiesData = data.policies;
-      },
-      error: (err) => console.error('Cannot load JSON', err),
+    this.dashboardService.loadQueue().subscribe((data) => (this.queueData = data));
+    this.dashboardService.loadPolicies().subscribe((data) => {
+      this.policiesData = data;
+      this.filteredPoliciesData = [...data];
     });
   }
 
@@ -101,28 +54,50 @@ export class DashboardComponent {
 
   deletePolicy(policy: Policy) {
     this.policiesData = this.policiesData.filter((p) => p.id !== policy.id);
+    this.filteredPoliciesData = this.filteredPoliciesData.filter((p) => p.id !== policy.id);
   }
 
   setContent(section: string) {
     this.currentContent = section;
 
-    this.http.get<any>('assets/data/seed.json').subscribe({
-      next: (data) => {
-        let allQueue: QueueItem[] = data.workQueue;
-
-        if (section === 'assigned') {
-          this.queueData = allQueue;
-        } else if (section === 'review') {
-          this.queueData = allQueue.filter((item) => item.account === 'Pending review');
-        } else if (section === 'referrals') {
-          this.queueData = allQueue.filter((item) => item.account === 'New');
-        }
-      },
-      error: (err) => console.error('Cannot load JSON', err),
-    });
+    let allQueue = this.queueDataBackup;
+    if (section === 'assigned') {
+      this.queueData = allQueue;
+    } else if (section === 'review') {
+      this.queueData = allQueue.filter((item) => item.account === 'Pending review');
+    } else if (section === 'referrals') {
+      this.queueData = allQueue.filter((item) => item.account === 'New');
+    }
   }
 
   toggleMenu(id: number) {
     this.openedMenuId = this.openedMenuId === id ? null : id;
+  }
+
+  toggleQueueMenu(id: number) {
+    this.openedQueueMenuId = this.openedQueueMenuId === id ? null : id;
+  }
+
+  filterPolicies() {
+    this.filteredPoliciesData = filterPolicies(this.policiesData, this.searchTerm);
+  }
+
+  setAccounts(section: string) {
+    switch (section) {
+      case 'filter':
+        this.filteredPoliciesData = [...this.policiesData];
+        break;
+      case 'sort':
+        this.filteredPoliciesData = sortByName(this.policiesData);
+        break;
+      case 'group':
+        this.filteredPoliciesData = groupByLob(this.policiesData);
+        break;
+      case 'new':
+        break;
+      default:
+        this.filteredPoliciesData = [...this.policiesData];
+        break;
+    }
   }
 }
