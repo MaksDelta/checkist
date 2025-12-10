@@ -37,7 +37,11 @@ export class DashboardComponent {
   constructor(private dashboardService: DashboardService) {}
 
   ngOnInit() {
-    this.dashboardService.loadQueue().subscribe((data) => (this.queueData = data));
+    this.dashboardService.loadQueue().subscribe((data) => {
+      this.queueData = data;
+      this.queueDataBackup = [...data];
+    });
+
     this.dashboardService.loadPolicies().subscribe((data) => {
       this.policiesData = data;
       this.filteredPoliciesData = [...data];
@@ -64,6 +68,17 @@ export class DashboardComponent {
     } else if (section === 'referrals') {
       this.queueData = allQueue.filter((item) => item.account === 'New');
     }
+  }
+
+  getQueueCount(key: string): number {
+    if (key === 'assigned') {
+      return this.queueDataBackup.length;
+    } else if (key === 'review') {
+      return this.queueDataBackup.filter((item) => item.account === 'Pending review').length;
+    } else if (key === 'referrals') {
+      return this.queueDataBackup.filter((item) => item.account === 'New').length;
+    }
+    return 0;
   }
 
   toggleMenu(id: number) {

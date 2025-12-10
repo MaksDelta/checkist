@@ -8,9 +8,10 @@
           (click)="setContent(section.key)"
           [class.active]="currentContent === section.key"
         >
-          {{ section.label }}
+          {{ section.label }} ({{ getQueueCount(section.key) }})
         </button>
       </div>
+
       <div class="table-queue">
         <table>
           <thead>
